@@ -9,7 +9,7 @@ tags: [postgresql, sql, pagination]
 
 ## Introduction
 
-`LIMIT` / `OFFSET` pagination is one of the most common ways to implement pagination in your service. You can find countless tutorials online describing the method and its even the default the popular framework Django[^2]. While it gets the job done for most use cases and smaller tables, you may begin to run into performance issues when paginating tables with millions of rows. Django and Laravel[^3] even have warnings in their documentation about this type of pagination.
+`LIMIT` / `OFFSET` pagination is one of the most common ways to implement pagination in your service. You can find countless tutorials online describing the method and its even the default in the popular web framework Django[^2]. While it gets the job done for most use cases and smaller tables, you may begin to run into performance issues when paginating tables with millions of rows. Django and Laravel[^3] even have warnings in their documentation about this type of pagination.
 
 In the rest of the post I'll show you how `LIMIT` / `OFFSET` pagination performs on larger tables as well as providing an alternative to `LIMIT` / `OFFSET` called cursor-based pagination.
 
@@ -69,7 +69,7 @@ imdb=# \d
 
 We’ll use `EXPLAIN ANALYZE` to compare the performance of `LIMIT` and `OFFSET` with other pagination methods. This command provides detailed query execution information, particularly the planning and execution times. We will use the query planning and execution times to compare the performance of the two methods. In each example, we will start at the beginning and then increase the offeset by factors of ten until we reach one million.
 
-This data below is not meant to measure the exact timings of these queries, and the hardware it is running on doesn't really matter here. What does matter here is the understanding of how it performs over datasets that vary by orders of magnitude. Additionally, to avoid much bias from query buffers in PostgreSQL, I will "warm" each query by executing it a few times before recording the timings.
+This data below is not meant to measure the exact timings of these queries, and the hardware it is running on doesn't really matter here. What does matter is the understanding of how it performs over datasets that vary by orders of magnitude. Additionally, to avoid much bias from query buffers in PostgreSQL, I will "warm" each query by executing it a few times before recording the timings.
 
 ## The LIMIT and OFFSET clauses
 
@@ -177,8 +177,6 @@ imdb=# EXPLAIN ANALYZE SELECT * FROM title WHERE id >= 100000 ORDER BY id LIMIT 
 
 Cursor pagination yields a significant performance gain when compared to `LIMIT`/`OFFSET` pagination.
 
-Here's a summary for the post, aiming to mirror the tone used throughout:
-
 ## Summary
 
 We've explored two common pagination methods in PostgreSQL: `LIMIT`/`OFFSET` and cursor-based pagination. While `LIMIT`/`OFFSET` is widely used and easy to implement, our performance tests reveal significant drawbacks when dealing with large datasets.
@@ -189,7 +187,7 @@ In contrast, cursor-based pagination maintained consistent performance regardles
 
 The takeaway is clear: while `LIMIT`/`OFFSET` might suffice for smaller datasets or lower-traffic applications, cursor-based pagination is the superior choice for scalable, high-performance systems. As your data grows, the performance gains of cursor pagination become increasingly valuable.
 
-Remember, choosing the right pagination method early can save you from headaches down the road. Don't let inefficient pagination be the bottleneck in your otherwise well-optimized PostgreSQL database.
+Remember, choosing the right pagination method early can save you from headaches down the road. Don't let inefficient pagination be the bottleneck in your otherwise well-optimized PostgreSQL database!
 
 ## A Closer Look at Query Cost
 
