@@ -1,6 +1,6 @@
 baseURL = 'https://mirio.dev'
 languageCode = 'en-us'
-title = 'Mirio Blog'
+title = "Blog"
 
 [module]
 [[module.imports]]
@@ -16,6 +16,7 @@ enableGitInfo = true
 color = 'linen'
 github = 'cmackenzie1'
 avatar = 'gravatar@mirio.dev'
+twitter = '@Cole_MacKenzie'
 name = 'Cole MacKenzie'
 bio = 'Software Engineer that likes to build things. All views are my own.'
 
