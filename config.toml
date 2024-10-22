@@ -1,6 +1,6 @@
 baseURL = 'https://mirio.dev'
 languageCode = 'en-us'
-title = "Blog"
+title = "cole's blog"
 
 [module]
 [[module.imports]]
