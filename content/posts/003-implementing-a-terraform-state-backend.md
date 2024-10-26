@@ -1,5 +1,5 @@
 ---
-title: 'Implementing a Terraform state backend on Cloudflare Workers'
+title: "Implementing a Terraform state backend on Cloudflare Workers"
 date: 2022-09-18T12:39:23-07:00
 draft: false
 slug: implementing-a-terraform-state-backend
@@ -245,19 +245,43 @@ Routing will be done using [`itty-router`](https://github.com/kwhitley/itty-rout
 
 ```typescript
 // src.index.ts
-import { Router } from 'itty-router';
+import { Router } from "itty-router";
 
 const router = Router();
 
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    router.get('/states/:projectName', withIdentity, withParams, getStateHandler);
-    router.post('/states/:projectName', withIdentity, withParams, putStateHandler);
-    router.delete('/states/:projectName', withIdentity, withParams, deleteStateHandler);
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
+    router.get(
+      "/states/:projectName",
+      withIdentity,
+      withParams,
+      getStateHandler,
+    );
+    router.post(
+      "/states/:projectName",
+      withIdentity,
+      withParams,
+      putStateHandler,
+    );
+    router.delete(
+      "/states/:projectName",
+      withIdentity,
+      withParams,
+      deleteStateHandler,
+    );
 
-    router.all('/states/:projectName/lock', withIdentity, withParams, lockStateHandler);
+    router.all(
+      "/states/:projectName/lock",
+      withIdentity,
+      withParams,
+      lockStateHandler,
+    );
 
-    router.all('*', () => new Response('Not found.\n', { status: 404 }));
+    router.all("*", () => new Response("Not found.\n", { status: 404 }));
     return router.handle(request, env);
   },
 };
@@ -278,17 +302,23 @@ format `:username/:projectName.tfstate`. As a convenience the following function
 format.
 
 ```typescript
-const getObjectKey = (username: string, projectName: string) => `${username}/${projectName}.tfstate`;
+const getObjectKey = (username: string, projectName: string) =>
+  `${username}/${projectName}.tfstate`;
 ```
 
 As mentioned above, the `lockStateHandler` that forwards the requests to the Durable Object will look something like:
 
 ```typescript
-export const lockStateHandler = async (request: RequestWithIdentity & RouteParams, env: Env) => {
+export const lockStateHandler = async (
+  request: RequestWithIdentity & RouteParams,
+  env: Env,
+) => {
   const { projectName } = request;
-  const username = request.identity?.userInfo?.username || '';
-  if (!projectName || projectName === '') return new Response('No project name specified.', { status: 400 });
-  if (!username || username === '') return new Response('Unable to determine username', { status: 500 });
+  const username = request.identity?.userInfo?.username || "";
+  if (!projectName || projectName === "")
+    return new Response("No project name specified.", { status: 400 });
+  if (!username || username === "")
+    return new Response("Unable to determine username", { status: 500 });
   const id = env.DURABLE_LOCK.idFromName(getObjectKey(username, projectName));
   const lock = env.DURABLE_LOCK.get(id);
   return lock.fetch(request);
@@ -310,7 +340,7 @@ export class DurableLock {
     return this.state.blockConcurrencyWhile(async () => {
       if (this.lockInfo) return Response.json(this.lockInfo, { status: 423 });
       const lockInfo = (await request.json()) as LockInfo;
-      await this.state.storage.put('_lock', lockInfo);
+      await this.state.storage.put("_lock", lockInfo);
       this.lockInfo = lockInfo;
       return new Response(); // 200: OK
     });
@@ -350,14 +380,23 @@ the `prefix` when listing objects to get a list of states for a given username.
 All states are treated as opaque values and simply just passed between as-is to the underlying storage.
 
 ```typescript
-export const getStateHandler = async (request: RequestWithIdentity & RouteParams, env: Env) => {
+export const getStateHandler = async (
+  request: RequestWithIdentity & RouteParams,
+  env: Env,
+) => {
   const { projectName } = request;
-  const username = request.identity?.userInfo?.username || '';
-  if (!projectName || projectName === '') return new Response('No project name specified.', { status: 400 });
-  if (!username || username === '') return new Response('Unable to determine username', { status: 500 });
-  const state: R2ObjectBody = await env.TFSTATE_BUCKET.get(getObjectKey(username, projectName));
+  const username = request.identity?.userInfo?.username || "";
+  if (!projectName || projectName === "")
+    return new Response("No project name specified.", { status: 400 });
+  if (!username || username === "")
+    return new Response("Unable to determine username", { status: 500 });
+  const state: R2ObjectBody = await env.TFSTATE_BUCKET.get(
+    getObjectKey(username, projectName),
+  );
   if (!state) return new Response(null, { status: 204 });
-  return new Response(await state?.arrayBuffer(), { headers: { 'content-type': 'application/json' } });
+  return new Response(await state?.arrayBuffer(), {
+    headers: { "content-type": "application/json" },
+  });
 };
 ```
 

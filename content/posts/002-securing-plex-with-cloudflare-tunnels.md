@@ -1,5 +1,5 @@
 ---
-title: 'Securing self-hosted Plex with Cloudflare Tunnels'
+title: "Securing self-hosted Plex with Cloudflare Tunnels"
 date: 2022-09-15T18:25:14-07:00
 draft: false
 keywords: [plex, zero trust, cloudflared, cloudflare]
