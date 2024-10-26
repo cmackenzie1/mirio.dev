@@ -1,7 +1,7 @@
 ---
-title: 'Echo: httpbin on Cloudflare Workers'
+title: "Echo: httpbin on Cloudflare Workers"
 date: 2022-09-13T20:04:03-07:00
-slug: 'echo-httpbin-on-workers'
+slug: "echo-httpbin-on-workers"
 draft: false
 ---
 
@@ -47,7 +47,11 @@ routes = [
 
 ```typescript
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
     const { url, method } = request;
     const headers = Object.fromEntries(request.headers);
     return Response.json({ headers, url, method });
