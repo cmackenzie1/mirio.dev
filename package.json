@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "deploy": "hugo && wrangler pages publish public",
-    "preview": "hugo serve --buildFuture --buildDrafts --buildExpired",
+    "dev": "hugo serve --buildFuture --buildDrafts --buildExpired",
     "format": "prettier --write ."
   },
   "devDependencies": {
