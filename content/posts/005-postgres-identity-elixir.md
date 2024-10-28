@@ -1,15 +1,15 @@
 ---
-title: "Using Postgres Identity Columns in Ecto SQL"
+title: "Using PostgreSQL Identity Columns in Ecto SQL"
 date: "2024-10-26T12:00:00Z"
 draft: false
 slug: "ecto-sql-identity-columns"
-keywords: [postgresql, elixir, ecto, identity]
+keywords: [postgresql, postgres, elixir, ecto, identity, sql]
 tags: [postgresql, sql, elixir]
 ---
 
 # Using Postgres Identity Columns in Ecto SQL
 
-When working with Postgres and Elixir's [Ecto ORM](https://hexdocs.pm/ecto/Ecto.html), you are likely using `SERIAL` columns for auto-incrementing primary keys. However, since Postgres 10 (released in October 2017), there's a better way: `IDENTITY` columns.
+When working with PostgreSQL and Elixir's [Ecto ORM](https://hexdocs.pm/ecto/Ecto.html), you are likely using `SERIAL` columns for auto-incrementing primary keys. However, since PostgreSQL 10 (released in October 2017), there's a better way: `IDENTITY` columns.
 
 ## Why Identity Columns?
 
@@ -77,7 +77,7 @@ That's all there is to it!
 
 # Using UUIDs Instead
 
-If you prefer using UUIDs for your primary keys, you can easily adapt the above patterns by changing :identity to :binary_id. For repository-wide configuration:
+If you prefer using UUIDs for your primary keys, you can easily adapt the above patterns by changing `:identity` to `:binary_id`. For repository-wide configuration:
 
 ```elixir
 config :demo, Demo.Repo,
