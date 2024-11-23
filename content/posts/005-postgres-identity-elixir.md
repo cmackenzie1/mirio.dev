@@ -7,8 +7,6 @@ keywords: [postgresql, postgres, elixir, ecto, identity, sql]
 tags: [postgresql, sql, elixir]
 ---
 
-# Using Postgres Identity Columns in Ecto SQL
-
 When working with PostgreSQL and Elixir's [Ecto ORM](https://hexdocs.pm/ecto/Ecto.html), you are likely using `SERIAL` columns for auto-incrementing primary keys. However, since PostgreSQL 10 (released in October 2017), there's a better way: `IDENTITY` columns.
 
 ## Why Identity Columns?
