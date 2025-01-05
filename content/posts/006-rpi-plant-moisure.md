@@ -3,8 +3,8 @@ title: 'Using a Raspberry Pi to Monitor Plant Soil Moisture'
 date: '2025-01-05T12:00:00Z'
 draft: false
 slug: 'rpi-plant-moisture'
-keywords: [raspberry pi, rpi, plant, moisture, sensor]
-tags: [raspberry pi, plant, sensor]
+keywords: [raspberry pi, rpi, plant, moisture, sensor, iot, prometheus, grafana]
+tags: [raspberry pi, plant, sensor, iot]
 ---
 
 ![Raspberry Pi Zero with moisture sensor](/img/rpi-moisture-sensor.jpeg)
@@ -425,6 +425,8 @@ similar monitoring systems.
 If you made this far, thanks for reading! I hope you found this post interesting
 and useful. If you have any questions or feedback, feel free to open an issue on
 my [GitHub repository].
+
+![Calamansi Plant with soil sensor](/img/rpi-final-image.jpeg)
 
 ---
 
