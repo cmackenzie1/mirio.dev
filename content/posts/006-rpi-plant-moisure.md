@@ -249,6 +249,8 @@ Now that we have a working sensor implementation, let's set up a monitoring
 system using Prometheus and Grafana. As always, you can find the complete code
 in the [GitHub repository].
 
+### Instrumenting with Prometheus
+
 1.  Add the following dependencies to your `Cargo.toml` file:
 
     ```toml
@@ -350,7 +352,7 @@ in the [GitHub repository].
     temperature 20.521106719970703
     ```
 
-## Grafana Setup
+### Grafana Setup
 
 1.  Run Prometheus and Grafana using Docker Compose. Create a
     `docker-compose.yml` file:
