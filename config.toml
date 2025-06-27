@@ -1,5 +1,5 @@
 languageCode = 'en-us'
-title = "cole's blog"
+title = "Cole's blog"
 
 [module]
 [[module.imports]]
